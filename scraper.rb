@@ -4,11 +4,17 @@
 require "capybara"
 require "selenium-webdriver"
 
+# Because some systems are just TOO slow
+Capybara.default_max_wait_time = 10
+
 capybara = Capybara::Session.new(:selenium_chrome_headless)
-# Start scraping
+
 # "Enter as a guest" button on inner west council website
 capybara.visit("https://innerwest.t1cloud.com/T1Default/CiAnywhere/Web/INNERWEST/Public/LogOn/PRONLINESERVICE")
 
-capybara.save_and_open_page
+capybara.find("#Ci2Function3 a").click
 
-# puts capybara.find("#banner h2").text
+# Get the DA number for the first result
+p capybara.all(".thumbnailItem").first.find(".headingField").text
+
+# capybara.save_and_open_page
