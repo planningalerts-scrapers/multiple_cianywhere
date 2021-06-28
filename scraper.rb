@@ -33,7 +33,7 @@ total = capybara.find(".resultsRange").text.delete(",").to_i
 
 puts "Expecting #{total} applications in total"
 
-# TODO: What do we do here if we're not returning any results?
+exit unless total > 0
 
 applications = []
 
