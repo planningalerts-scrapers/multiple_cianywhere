@@ -33,6 +33,10 @@ capybara.find(".fltrHeading", text: "APPLICATION TYPE").find("button").click
 ["PDDA", "PDDAEXTIME", "PDDAMODS", "PDDAPRELDG", "PDDATREE"].each do |code|
   puts "Filtering by code #{code}..."
   capybara.find("li.fltrItem[data-t1-filtercode=#{code}]").click
+  capybara.all(".thumbnailItem")
+  # For some weird reason when we run the browser headless we have to click
+  # on the filter again
+  capybara.find("button.filter").click
 end
 
 # Find the total number of applications we expect to find
