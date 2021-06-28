@@ -8,6 +8,9 @@ require "active_support"
 require "active_support/core_ext/time"
 require "scraperwiki"
 
+puts "/usr/local/bin:"
+system("ls /usr/local/bin")
+
 Time.zone = "Sydney"
 
 # Because some systems are just WAY TOO slow
