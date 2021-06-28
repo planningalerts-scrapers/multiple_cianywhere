@@ -24,9 +24,17 @@ capybara.visit(start_url)
 
 capybara.find("#Ci2Function3 a").click
 
-# TODO: Select all types of development applications
+# Filter for all types of development applications
+capybara.find("button.filter").click
+capybara.find(".fltrHeading", text: "APPLICATION TYPE").find("button").click
 
-# First we want to find the total number of applications we expect to find
+capybara.find("li.fltrItem[data-t1-filtercode=PDDA]").click
+capybara.find("li.fltrItem[data-t1-filtercode=PDDAEXTIME]").click
+capybara.find("li.fltrItem[data-t1-filtercode=PDDAMODS]").click
+capybara.find("li.fltrItem[data-t1-filtercode=PDDAPRELDG]").click
+capybara.find("li.fltrItem[data-t1-filtercode=PDDATREE]").click
+
+# Find the total number of applications we expect to find
 # with the "infinite" scrolling
 
 total = capybara.find(".resultsRange").text.delete(",").to_i
