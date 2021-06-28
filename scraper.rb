@@ -6,6 +6,7 @@ require "selenium-webdriver"
 # Using activesupport for timezone handling
 require "active_support"
 require "active_support/core_ext/time"
+require "scraperwiki"
 
 Time.zone = "Sydney"
 
@@ -62,10 +63,11 @@ loop do
       # Might as well provide the date_scraped in the same timezone as date_received
       "date_scraped" => Time.zone.now.to_s,
       # Interprets the date in Sydney timezone
-      "date_received" => Time.zone.strptime(application.find(".thbFld_LodgedDate .editorField").text, "%d-%b-%Y %H:%M:%S").to_s
+      "date_received" => Time.zone.strptime(application.find(".thbFld_LodgedDate .editorField").text, "%d-%b-%Y %H:%M:%S").to_s,
+      "authority_label" => "inner_west"
     }
 
-    pp record
+    ScraperWiki.save_sqlite(%w[authority_label council_reference], record)
   end
 
   break if applications.count >= total
