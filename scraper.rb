@@ -9,7 +9,7 @@ require "active_support/core_ext/time"
 require "scraperwiki"
 
 puts "/usr/local/bin:"
-system("ls /usr/local/bin")
+system("ls -l /usr/local/bin")
 puts "PATH: #{ENV['PATH']}"
 
 Time.zone = "Sydney"
