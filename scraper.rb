@@ -22,20 +22,20 @@ capybara.visit(start_url)
 
 capybara.find("#Ci2Function3 a").click
 
-# Get the DA number for the first result
-application = capybara.all(".thumbnailItem").first
+capybara.all(".thumbnailItem").each do |application|
+  record = {
+    "council_reference" => application.find(".headingField").text,
+    "address" => application.find(".subHeadingField").text,
+    "description" => application.find(".thbFld_Description").text,
+    # Great. Once again no direct links to individual applications on the open web
+    "info_url" => start_url,
+    # Might as well provide the date_scraped in the same timezone as date_received
+    "date_scraped" => Time.zone.now.to_s,
+    # Interprets the date in Sydney timezone
+    "date_received" => Time.zone.strptime(application.find(".thbFld_LodgedDate .editorField").text, "%d-%b-%Y %H:%M:%S").to_s
+  }
 
-record = {
-  "council_reference" => application.find(".headingField").text,
-  "address" => application.find(".subHeadingField").text,
-  "description" => application.find(".thbFld_Description").text,
-  # Great. Once again no direct links to individual applications on the open web
-  "info_url" => start_url,
-  "date_scraped" => Date.today.to_s,
-  # Interprets the date in Sydney timezone
-  "date_received" => Time.zone.strptime(application.find(".thbFld_LodgedDate .editorField").text, "%d-%b-%Y %H:%M:%S").to_s
-}
-
-pp record
+  pp record
+end
 
 # capybara.save_and_open_page
