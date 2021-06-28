@@ -7,3 +7,4 @@ gem "scraperwiki", git: "https://github.com/openaustralia/scraperwiki-ruby.git",
 gem 'capybara'
 gem 'selenium-webdriver'
 gem 'launchy'
+gem "activesupport"
