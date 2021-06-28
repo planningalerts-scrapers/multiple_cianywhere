@@ -10,6 +10,7 @@ require "scraperwiki"
 
 puts "/usr/local/bin:"
 system("ls /usr/local/bin")
+puts "PATH: #{ENV['PATH']}"
 
 Time.zone = "Sydney"
 
