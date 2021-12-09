@@ -23,7 +23,7 @@ start_url = "https://innerwest.t1cloud.com/T1Default/CiAnywhere/Web/INNERWEST/Pu
 # "Enter as a guest" button on inner west council website
 capybara.visit(start_url)
 
-capybara.find("#Ci2Function3 a").click
+capybara.find("#Ci2Function1 a").click
 
 # Filter for all types of development applications
 puts "Configuring filter..."
