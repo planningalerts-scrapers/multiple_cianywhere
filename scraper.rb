@@ -28,7 +28,8 @@ def scrape(url:, headless: true, filter_codes:, time_zone:, authority_label:)
   filter_codes.each do |code|
     puts "Filtering by code #{code}..."
     capybara.find("li.fltrItem[data-t1-filtercode=#{code}]").click
-    capybara.all(".thumbnailItem")
+    # Wait for either a list of results to appear or a message saying there are no results
+    capybara.all(".thumbnailItem,.noResultsView")
     # For some weird reason when we run the browser headless we have to click
     # on the filter again
     capybara.find("button.filter").click
