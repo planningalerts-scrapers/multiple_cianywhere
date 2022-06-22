@@ -74,19 +74,25 @@ def scrape(url:, headless: true, filter_codes:, time_zone:, authority_label:)
   # capybara.save_and_open_page
 end
 
-
 AUTHORITIES = {
   inner_west: {
     url: "https://innerwest.t1cloud.com/T1Default/CiAnywhere/Web/INNERWEST/Public/LogOn/PRONLINESERVICE",
     filter_codes: ["PDDA", "PDDAEXTIME", "PDDAMODS", "PDDAPRELDG", "PDDATREE"],
     time_zone: "Sydney"
+  },
+  wollongong: {
+    url: "https://wcc.t1cloud.com/T1Default/CiAnywhere/Web/WCC/Public/LogOn/PR_ONLINE_PORTAL",
+    filter_codes: ["PDDACC", "PDDA", "PDDAMODS"],
+    time_zone: "Sydney"
   }
 }
 
+# By default run the browser headless. Set this to false to watch what's
+# going on by seeing the browser do its thing in real time. This is useful
+# debugging
+headless = false
+
 AUTHORITIES.each do |authority_label, params|
   puts "Scraping #{authority_label}..."
-  # By default run the browser headless. Set this to false to watch what's
-  # going on by seeing the browser do its thing in real time. This is useful
-  # debugging
-  scrape(params.merge(authority_label: authority_label, headless: true))
+  scrape(params.merge(authority_label: authority_label.to_s, headless: headless))
 end
