@@ -13,9 +13,12 @@ Time.zone = "Sydney"
 # Because some systems are just WAY TOO slow
 Capybara.default_max_wait_time = 60
 
-# Use :selenium_chrome instead below to watch what's going on which can
-# be very useful for debugging
-capybara = Capybara::Session.new(:selenium_chrome_headless)
+# By default run the browser headless. Set this to false to watch what's
+# going on by seeing the browser do its thing in real time. This is useful
+# debugging
+headless = true
+
+capybara = Capybara::Session.new(headless ? :selenium_chrome_headless : :selenium_chrome)
 
 # This is the only url we can link to. It's the one for "Guest" access. Sigh.
 start_url = "https://innerwest.t1cloud.com/T1Default/CiAnywhere/Web/INNERWEST/Public/LogOn/PRONLINESERVICE"
