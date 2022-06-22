@@ -74,13 +74,18 @@ def scrape(url:, headless: true, filter_codes:, time_zone:, authority_label:)
 end
 
 
-# This is the only url we can link to. It's the one for "Guest" access. Sigh.
-start_url = "https://innerwest.t1cloud.com/T1Default/CiAnywhere/Web/INNERWEST/Public/LogOn/PRONLINESERVICE"
-filter_codes = ["PDDA", "PDDAEXTIME", "PDDAMODS", "PDDAPRELDG", "PDDATREE"]
-time_zone = "Sydney"
-authority_label = "inner_west"
+AUTHORITIES = {
+  inner_west: {
+    url: "https://innerwest.t1cloud.com/T1Default/CiAnywhere/Web/INNERWEST/Public/LogOn/PRONLINESERVICE",
+    filter_codes: ["PDDA", "PDDAEXTIME", "PDDAMODS", "PDDAPRELDG", "PDDATREE"],
+    time_zone: "Sydney"
+  }
+}
 
-# By default run the browser headless. Set this to false to watch what's
-# going on by seeing the browser do its thing in real time. This is useful
-# debugging
-scrape(url: start_url, filter_codes: filter_codes, time_zone: time_zone, authority_label: authority_label, headless: true)
+AUTHORITIES.each do |authority_label, params|
+  puts "Scraping #{authority_label}..."
+  # By default run the browser headless. Set this to false to watch what's
+  # going on by seeing the browser do its thing in real time. This is useful
+  # debugging
+  scrape(params.merge(authority_label: authority_label, headless: true))
+end
