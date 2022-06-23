@@ -22,19 +22,33 @@ def scrape(url:, headless: true, filter_codes:, time_zone:, authority_label:)
   # Wait for either a list of results to appear or a message saying there are no results
   capybara.all(".thumbnailItem,.noResultsView")
 
-  # Filter for all types of development applications
-  puts "Configuring filter..."
+  # Ensure that status and application type are opened up under the filter
   capybara.find("button.filter").click
   capybara.find(".fltrHeading", text: "APPLICATION TYPE").find("button").click
+  capybara.find("button.filter").click
 
-  filter_codes.each do |code|
-    puts "Filtering by code #{code}..."
+  puts "Configuring filter by status..."
+  # codes for "Lodged" and "Current"
+  ["L", "C"].each do |code|
+    puts "Filtering by status code #{code}..."
+    # After clicking a filter, the filter pane gets closed automatically. So, we need to reopen it every time
+    capybara.find("button.filter").click
     capybara.find("li.fltrItem[data-t1-filtercode=#{code}]").click
+
     # Wait for either a list of results to appear or a message saying there are no results
     capybara.all(".thumbnailItem,.noResultsView")
-    # For some weird reason when we run the browser headless we have to click
-    # on the filter again
+  end
+
+  # Filter for all types of development applications
+  puts "Configuring filter by application type..."
+  filter_codes.each do |code|
+    puts "Filtering by application type code #{code}..."
+    # After clicking a filter, the filter pane gets closed automatically. So, we need to reopen it every time
     capybara.find("button.filter").click
+    capybara.find("li.fltrItem[data-t1-filtercode=#{code}]").click
+
+    # Wait for either a list of results to appear or a message saying there are no results
+    capybara.all(".thumbnailItem,.noResultsView")
   end
 
   # Find the total number of applications we expect to find
