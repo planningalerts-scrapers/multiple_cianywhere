@@ -8,12 +8,12 @@ require "active_support"
 require "active_support/core_ext/time"
 require "scraperwiki"
 
-def scrape(url:, headless: true, filter_codes:, time_zone:, authority_label:)
+def scrape(url:, filter_codes:, time_zone:, authority_label:)
   # Because some systems are just WAY TOO slow
   Capybara.default_max_wait_time = 60
 
   Time.zone = time_zone
-  capybara = Capybara::Session.new(headless ? :selenium_chrome_headless : :selenium_chrome)
+  capybara = Capybara::Session.new(:chrome)
 
   # "Enter as a guest" button on inner west council website
   capybara.visit(url)
@@ -108,7 +108,15 @@ AUTHORITIES = {
 # debugging
 headless = true
 
+Capybara.register_driver :chrome do |app|
+  options = ::Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--headless') if headless
+  options.add_argument('--disable-dev-shm-usage')
+
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+end
+
 AUTHORITIES.each do |authority_label, params|
   puts "Scraping #{authority_label}..."
-  scrape(params.merge(authority_label: authority_label.to_s, headless: headless))
+  scrape(params.merge(authority_label: authority_label.to_s))
 end
