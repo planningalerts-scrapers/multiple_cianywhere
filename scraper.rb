@@ -19,6 +19,8 @@ def scrape(url:, headless: true, filter_codes:, time_zone:, authority_label:)
   capybara.visit(url)
 
   capybara.find(".tile", text: "Application Tracking").find("a").click
+  # Wait for either a list of results to appear or a message saying there are no results
+  capybara.all(".thumbnailItem,.noResultsView")
 
   # Filter for all types of development applications
   puts "Configuring filter..."
