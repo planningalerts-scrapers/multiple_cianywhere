@@ -106,7 +106,7 @@ AUTHORITIES = {
 # By default run the browser headless. Set this to false to watch what's
 # going on by seeing the browser do its thing in real time. This is useful
 # debugging
-headless = false
+headless = true
 
 AUTHORITIES.each do |authority_label, params|
   puts "Scraping #{authority_label}..."
