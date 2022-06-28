@@ -115,7 +115,6 @@ Capybara.register_driver :chrome do |app|
   # Trying some seamingly random suggestions from https://stackoverflow.com/questions/49008008/chrome-headless-puppeteer-too-much-cpu
   options.add_argument('--disable-accelerated-2d-canvas')
   options.add_argument('--no-first-run')
-  options.add_argument('--no-zygote')
   options.add_argument('--single-process')
   options.add_argument('--disable-gpu')
 
