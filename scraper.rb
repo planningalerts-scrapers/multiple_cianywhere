@@ -121,6 +121,9 @@ Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
+# TODO: If one of the authorities fail make the other still work
+# Look at other "multiple" scrapers for example
+
 AUTHORITIES.each do |authority_label, params|
   puts "Scraping #{authority_label}..."
   scrape(params.merge(authority_label: authority_label.to_s))
