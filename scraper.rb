@@ -97,6 +97,10 @@ def scrape(url:, filter_codes:, time_zone:, authority_label:)
     break if applications.count >= total
   end
   # capybara.save_and_open_page
+
+  # Explicitly close the window in the hope that it quits the browser and recoups
+  # some of the memory it gobbled up before scraping the next authority
+  capybara.quit
 end
 
 AUTHORITIES = {
