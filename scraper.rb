@@ -126,10 +126,22 @@ Capybara.register_driver :chrome do |app|
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
 
-# TODO: If one of the authorities fail make the other still work
-# Look at other "multiple" scrapers for example
+# TODO: Add regression tests
 
+exceptions = {}
 AUTHORITIES.each do |authority_label, params|
   puts "Scraping #{authority_label}..."
-  scrape(params.merge(authority_label: authority_label.to_s))
+
+  begin
+    scrape(params.merge(authority_label: authority_label.to_s))
+  rescue StandardError => e
+    warn "#{authority_label}: ERROR: #{e}"
+    warn e.backtrace
+    exceptions[authority_label] = e
+  end
+end
+
+unless exceptions.empty?
+  raise "There were errors with the following authorities: #{exceptions.keys}. "\
+        "See earlier output for details"
 end
