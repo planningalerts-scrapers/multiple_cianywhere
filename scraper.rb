@@ -8,6 +8,14 @@ require "active_support"
 require "active_support/core_ext/time"
 require "scraperwiki"
 
+def open_filter_sidebar(capybara)
+  # Only click the filter button if the filter sidebar is not already open
+  e = capybara.find(".leftActionsPanel", visible: :all)
+  unless e.visible?
+    capybara.find("button.filter").click
+  end
+end
+
 def scrape(url:, filter_codes:, time_zone:, authority_label:)
   # Because some systems are just WAY TOO slow
   Capybara.default_max_wait_time = 60
@@ -23,16 +31,14 @@ def scrape(url:, filter_codes:, time_zone:, authority_label:)
   capybara.all(".thumbnailItem,.noResultsView")
 
   # Ensure that status and application type are opened up under the filter
-  capybara.find("button.filter").click
+  open_filter_sidebar(capybara)
   capybara.find(".fltrHeading", text: "APPLICATION TYPE").find("button").click
-  capybara.find("button.filter").click
 
   puts "Configuring filter by status..."
   # codes for "Lodged" and "Current"
   ["L", "C"].each do |code|
     puts "Filtering by status code #{code}..."
-    # After clicking a filter, the filter pane gets closed automatically. So, we need to reopen it every time
-    capybara.find("button.filter").click
+    open_filter_sidebar(capybara)
     capybara.find("li.fltrItem[data-t1-filtercode=#{code}]").click
 
     # Wait for either a list of results to appear or a message saying there are no results
@@ -43,8 +49,7 @@ def scrape(url:, filter_codes:, time_zone:, authority_label:)
   puts "Configuring filter by application type..."
   filter_codes.each do |code|
     puts "Filtering by application type code #{code}..."
-    # After clicking a filter, the filter pane gets closed automatically. So, we need to reopen it every time
-    capybara.find("button.filter").click
+    open_filter_sidebar(capybara)
     capybara.find("li.fltrItem[data-t1-filtercode=#{code}]").click
 
     # Wait for either a list of results to appear or a message saying there are no results
