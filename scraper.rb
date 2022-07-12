@@ -23,6 +23,10 @@ def scrape(url:, filter_codes:, time_zone:, authority_label:)
   Time.zone = time_zone
   capybara = Capybara::Session.new(:chrome)
 
+  # This application behaves quite differently at different window sizes. So,
+  # let's try to make it more predictable by setting a fixed size here
+  capybara.current_window.resize_to(1200, 600)
+
   # "Enter as a guest" button on inner west council website
   capybara.visit(url)
 
