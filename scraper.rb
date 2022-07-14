@@ -104,6 +104,11 @@ def scrape(url:, filter_codes:, time_zone:, authority_label:)
 end
 
 AUTHORITIES = {
+  central_highlands: {
+    url: "https://chrc.t1cloud.com/T1Default/CiAnywhere/Web/CHRC/Public/LogOn/ONLINESERVICES",
+    filter_codes: ["DA", "DABWAP", "DAMCU", "DAOPW", "DARAL"],
+    time_zone: "Brisbane"
+  },
   inner_west: {
     url: "https://innerwest.t1cloud.com/T1Default/CiAnywhere/Web/INNERWEST/Public/LogOn/PRONLINESERVICE",
     filter_codes: ["PDDA", "PDDAEXTIME", "PDDAMODS", "PDDAPRELDG", "PDDATREE"],
