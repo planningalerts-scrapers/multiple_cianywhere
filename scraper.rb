@@ -25,7 +25,7 @@ def scrape(url:, filter_codes:, time_zone:, authority_label:)
 
   # This application behaves quite differently at different window sizes. So,
   # let's try to make it more predictable by setting a fixed size here
-  capybara.current_window.resize_to(1200, 600)
+  capybara.current_window.resize_to(2000, 1200)
 
   # "Enter as a guest" button on inner west council website
   capybara.visit(url)
