@@ -109,6 +109,12 @@ AUTHORITIES = {
     filter_codes: ["PDDA", "PDDAEXTIME", "PDDAMODS", "PDDAPRELDG", "PDDATREE"],
     time_zone: "Sydney"
   },
+  port_phillip: {
+    url: "https://copp.t1cloud.com/T1Default/CiAnywhere/Web/COPP/Public/LogOn/PRONLINESERVICE",
+    filter_codes: ["PDPLANPER", "PDPERAMD"],
+    # It's Victoria but in same time zone
+    time_zone: "Sydney"
+  },
   wollongong: {
     url: "https://wcc.t1cloud.com/T1Default/CiAnywhere/Web/WCC/Public/LogOn/PR_ONLINE_PORTAL",
     filter_codes: ["PDDACC", "PDDA", "PDDAMODS"],
